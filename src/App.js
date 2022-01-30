@@ -41,7 +41,6 @@ function App() {
 							const newI = i + x;
 							const newJ = j + y;
 							if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
-								// neighbours += g[newI][newJ];
 								if (g[newI][newJ] === 1) {
 									neighbours++;
 								}
@@ -58,6 +57,13 @@ function App() {
 		});
 		setTimeout(runSimulation, 500);
 	}, []);
+	const generateRandomGrid = () => {
+		const rows = [];
+		for (let i = 0; i < numRows; i++) {
+			rows.push(Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0)));
+		}
+		return setGrid(rows);
+	};
 	return (
 		<>
 			<div style={{ display: "flex", justifyContent: "center", margin: "10px" }}>
@@ -76,11 +82,7 @@ function App() {
 				<button
 					className="button"
 					onClick={() => {
-						const rows = [];
-						for (let i = 0; i < numRows; i++) {
-							rows.push(Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0)));
-						}
-						setGrid(rows);
+						generateRandomGrid();
 					}}
 				>
 					Random
