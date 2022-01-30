@@ -14,12 +14,15 @@ const position = [
 	[-1, -1],
 ];
 function App() {
-	const [grid, setGrid] = useState(() => {
+	const generateEmptyGrid = () => {
 		const rows = [];
 		for (let i = 0; i < numRows; i++) {
 			rows.push(Array.from(Array(numCols), () => 0));
 		}
 		return rows;
+	};
+	const [grid, setGrid] = useState(() => {
+		return generateEmptyGrid();
 	});
 	const [running, setRunning] = useState(false);
 	const runningRef = useRef(running);
@@ -53,7 +56,7 @@ function App() {
 				}
 			});
 		});
-		setTimeout(runSimulation, 1000);
+		setTimeout(runSimulation, 500);
 	}, []);
 	return (
 		<>
@@ -70,7 +73,28 @@ function App() {
 				>
 					{running ? `Stop` : `Start`}
 				</button>
-				<button class="button">Random</button>
+				<button
+					className="button"
+					onClick={() => {
+						const rows = [];
+						for (let i = 0; i < numRows; i++) {
+							rows.push(Array.from(Array(numCols), () => (Math.random() > 0.5 ? 1 : 0)));
+						}
+						setGrid(rows);
+					}}
+				>
+					Random
+				</button>
+				<button
+					className="button"
+					onClick={() => {
+						setGrid(() => {
+							return generateEmptyGrid();
+						});
+					}}
+				>
+					Clear
+				</button>
 			</div>
 			<div style={{ display: "grid", gridTemplateColumns: `repeat(${numCols},20px)`, justifyContent: "center" }}>
 				{grid.map((rows, i) =>
@@ -86,7 +110,7 @@ function App() {
 							style={{
 								width: 20,
 								height: 20,
-								backgroundColor: grid[i][j] ? "#ff0075" : undefined,
+								backgroundColor: grid[i][j] ? "#000" : undefined,
 								border: "1px solid #000",
 							}}
 						></div>
