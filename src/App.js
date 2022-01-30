@@ -41,10 +41,10 @@ function App() {
 							const newI = i + x;
 							const newJ = j + y;
 							if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
-								neighbours += g[newI][newJ];
-								// if (g[newI][newJ] === 1) {
-								// 	neighbours++;
-								// }
+								// neighbours += g[newI][newJ];
+								if (g[newI][newJ] === 1) {
+									neighbours++;
+								}
 							}
 						});
 						if (neighbours < 2 || neighbours > 3) {
