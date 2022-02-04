@@ -24,21 +24,17 @@ function App() {
 		return rows;
 	};
 
-	const [grid, setGrid] = useState(() => {
-		return generateEmptyGrid();
-	});
+	const [grid, setGrid] = useState(() => generateEmptyGrid());
 
 	const [running, setRunning] = useState(false);
 	const runningRef = useRef(running);
 	runningRef.current = running;
 
 	const runSimulation = useCallback(() => {
-		if (!runningRef.current) {
-			return;
-		}
+		if (!runningRef.current) return;
+
 		// simulate
-		setGrid(g => {
-			return produce(g, gridCopy => {
+		setGrid(g => produce(g, gridCopy => {
 				for (let i = 0; i < numRows; i++) {
 					for (let j = 0; j < numCols; j++) {
 						let neighbours = 0;
@@ -58,8 +54,8 @@ function App() {
 						}
 					}
 				}
-			});
-		});
+			})
+		);
 		setTimeout(runSimulation, 500);
 	}, []);
 
@@ -97,9 +93,7 @@ function App() {
 				<button
 					className="button"
 					onClick={() => {
-						setGrid(() => {
-							return generateEmptyGrid();
-						});
+						setGrid(() => generateEmptyGrid());
 					}}
 				>
 					Clear
