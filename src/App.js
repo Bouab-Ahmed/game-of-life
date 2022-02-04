@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import produce from "immer";
 import "./App.css";
+
 const numRows = 30;
 const numCols = 50;
 const position = [
@@ -13,6 +14,7 @@ const position = [
 	[-1, 1],
 	[-1, -1],
 ];
+
 function App() {
 	const generateEmptyGrid = () => {
 		const rows = [];
@@ -21,12 +23,15 @@ function App() {
 		}
 		return rows;
 	};
+
 	const [grid, setGrid] = useState(() => {
 		return generateEmptyGrid();
 	});
+
 	const [running, setRunning] = useState(false);
 	const runningRef = useRef(running);
 	runningRef.current = running;
+
 	const runSimulation = useCallback(() => {
 		if (!runningRef.current) {
 			return;
@@ -57,6 +62,7 @@ function App() {
 		});
 		setTimeout(runSimulation, 500);
 	}, []);
+
 	const generateRandomGrid = () => {
 		const rows = [];
 		for (let i = 0; i < numRows; i++) {
@@ -64,6 +70,7 @@ function App() {
 		}
 		return setGrid(rows);
 	};
+
 	return (
 		<>
 			<div style={{ display: "flex", justifyContent: "center", margin: "10px" }}>
