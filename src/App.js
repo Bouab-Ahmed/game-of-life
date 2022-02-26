@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import produce from "immer";
 import "./App.css";
+
 const numRows = 30;
 const numCols = 50;
 const position = [
@@ -13,6 +14,7 @@ const position = [
 	[-1, 1],
 	[-1, -1],
 ];
+
 function App() {
 	const generateEmptyGrid = () => {
 		const rows = [];
@@ -21,19 +23,18 @@ function App() {
 		}
 		return rows;
 	};
-	const [grid, setGrid] = useState(() => {
-		return generateEmptyGrid();
-	});
+
+	const [grid, setGrid] = useState(() => generateEmptyGrid());
+
 	const [running, setRunning] = useState(false);
 	const runningRef = useRef(running);
 	runningRef.current = running;
+
 	const runSimulation = useCallback(() => {
-		if (!runningRef.current) {
-			return;
-		}
+		if (!runningRef.current) return;
+
 		// simulate
-		setGrid(g => {
-			return produce(g, gridCopy => {
+		setGrid(g => produce(g, gridCopy => {
 				for (let i = 0; i < numRows; i++) {
 					for (let j = 0; j < numCols; j++) {
 						let neighbours = 0;
@@ -53,10 +54,11 @@ function App() {
 						}
 					}
 				}
-			});
-		});
+			})
+		);
 		setTimeout(runSimulation, 500);
 	}, []);
+
 	const generateRandomGrid = () => {
 		const rows = [];
 		for (let i = 0; i < numRows; i++) {
@@ -64,6 +66,7 @@ function App() {
 		}
 		return setGrid(rows);
 	};
+
 	return (
 		<>
 			<div style={{ display: "flex", justifyContent: "center", margin: "10px" }}>
@@ -90,9 +93,7 @@ function App() {
 				<button
 					className="button"
 					onClick={() => {
-						setGrid(() => {
-							return generateEmptyGrid();
-						});
+						setGrid(() => generateEmptyGrid());
 					}}
 				>
 					Clear
